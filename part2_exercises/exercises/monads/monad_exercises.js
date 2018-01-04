@@ -18,7 +18,9 @@ var user = {
   }
 };
 
-var ex1 = undefined;
+var ex1 = _.compose(chain(safeProp('name')), 
+                    chain(safeProp('street')), 
+                    safeProp('address'));
 
 
 // Exercise 2
@@ -36,7 +38,19 @@ var pureLog = function(x) {
   });
 }
 
-var ex2 = undefined;
+var onlyFilename = function (path) {
+  return _.last(path.split('/'))
+}
+
+var onlyFilename = _.compose(_.last, split('/'))
+
+var saveOnlyFilename = function (path) {
+  return new IO(function(){ return _.last(path.split('/')) })
+}
+
+var ex2 = _.compose(chain(pureLog), map(onlyFilename), getFile)
+var ex2 = _.compose(chain(_.compose(pureLog, onlyFilename)), getFile)
+var ex2 = _.compose(chain(pureLog), chain(saveOnlyFilename), getFile)
 
 
 
@@ -60,7 +74,8 @@ var getComments = function(i) {
   });
 }
 
-var ex3 = undefined;
+var ex3 = _.compose(chain(getComments), map(_.prop('id')), getPost);
+var ex3 = _.compose(chain(_.compose(getComments, _.prop('id'))), getPost);
 
 
 // Exercise 4
@@ -88,7 +103,8 @@ var validateEmail = function(x){
 }
 
 //  ex4 :: Email -> Either String (IO String)
-var ex4 = undefined;
+var ex4 = _.compose(map(chain(emailBlast)), map(addToMailingList), validateEmail);
+var ex4 = _.compose(map(_.compose(chain(emailBlast), addToMailingList)), validateEmail);
 
 
 module.exports = {ex1: ex1, ex2: ex2, ex3: ex3, ex4: ex4, user: user}

@@ -1,0 +1,19 @@
+title: 'Dune'
+author: 'F.Herbert'
+ISIN: 934875,
+ed: 'Vicenç Vives'
+
+title: 'Germinal'
+author: 'Flaubert'
+ISIN: 934876
+year: '1745'
+
+title: 'b1'
+author: 'F.gase'
+ISIN: 934873,
+place: 'Barcelona'
+
+title: 'b2'
+author: 'asdge'
+ISIN: 934872
+year: '1979'

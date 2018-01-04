@@ -7,10 +7,10 @@
     "accounting": "^0.4.1",
     "chai": "^1.9.1",
     "data.task": "^3.0.0",
-    "ramda": "^0.13.0"
+    "ramda": "^0.25.0"
   },
   "devDependencies": {
-    "mocha": "^1.17.1"
+    "mocha": "^4.0.1"
   },
   "scripts": {
     "test": "mocha *exercises/exercises/**/*_spec.js"

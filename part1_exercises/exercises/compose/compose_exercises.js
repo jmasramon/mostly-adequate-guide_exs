@@ -15,15 +15,19 @@ var CARS = [
 // Exercise 1:
 // ============
 // use _.compose() to rewrite the function below. Hint: _.prop() is curried.
-var isLastInStock = function(cars) {
-  var reversed_cars = _.last(cars);
-  return _.prop('in_stock', reversed_cars)
-};
+var isLastInStock = _.compose(_.prop('in_stock'), 
+                              _.last)
+
+// function(cars) {
+//   var reversed_cars = _.last(cars);
+//   return _.prop('in_stock', reversed_cars)
+// };
 
 // Exercise 2:
 // ============
 // use _.compose(), _.prop() and _.head() to retrieve the name of the first car
-var nameOfFirstCar = undefined;
+var nameOfFirstCar = _.compose(_.prop('name'), 
+                                _.head);
 
 
 // Exercise 3:
@@ -31,10 +35,13 @@ var nameOfFirstCar = undefined;
 // Use the helper function _average to refactor averageDollarValue as a composition
 var _average = function(xs) { return _.reduce(add, 0, xs) / xs.length; }; // <- leave be
 
-var averageDollarValue = function(cars) {
-  var dollar_values = _.map(function(c) { return c.dollar_value; }, cars);
-  return _average(dollar_values);
-};
+var averageDollarValue = _.compose(_average, 
+                                  _.map(_.prop('dollar_value')))
+
+// function(cars) {
+//   var dollar_values = _.map(function(c) { return c.dollar_value; }, cars);
+//   return _average(dollar_values);
+// };
 
 
 // Exercise 4:
@@ -43,30 +50,51 @@ var averageDollarValue = function(cars) {
 
 var _underscore = _.replace(/\W+/g, '_'); //<-- leave this alone and use to sanitize
 
-var sanitizeNames = undefined;
+var sanitizeNames = _.map(_.compose(_underscore, 
+                                    _.toLower, 
+                                    _.prop('name')));
 
 
 // Bonus 1:
 // ============
 // Refactor availablePrices with compose.
 
-var availablePrices = function(cars) {
-  var available_cars = _.filter(_.prop('in_stock'), cars);
-  return available_cars.map(function(x){
-    return accounting.formatMoney(x.dollar_value)
-  }).join(', ');
-};
+var availablePrices = _.compose(_.join(', '), 
+                                map(_.compose(accounting.formatMoney, 
+                                              _.prop('dollar_value'))), 
+                                _.filter(_.prop('in_stock')))
+
+
+// function(cars) {
+//   var available_cars = _.filter(_.prop('in_stock'), cars);
+//   return available_cars.map(function(x){
+//     return accounting.formatMoney(x.dollar_value)
+//   }).join(', ');
+// };
 
 
 // Bonus 2:
 // ============
 // Refactor to pointfree. Hint: you can use _.flip()
 
-var fastestCar = function(cars) {
-  var sorted = _.sortBy(function(car){ return car.horsepower }, cars);
-  var fastest = _.last(sorted);
-  return fastest.name + ' is the fastest';
-};
+var addSuffix = _.curry(function (suffix, str) {
+  return str + suffix
+})
+
+var addFastestSuffix = addSuffix(' is the fastest')
+
+var flippedConcat = _.flip(_.concat)
+
+var fastestCar = _.compose(flippedConcat(' is the fastest'), 
+                          _.prop('name'), 
+                          _.last, 
+                          _.sortBy(_.prop('horsepower')))
+
+// function(cars) {
+//   var sorted = _.sortBy(function(car){ return car.horsepower }, cars);
+//   var fastest = _.last(sorted);
+//   return fastest.name + ' is the fastest';
+// };
 
 
 module.exports = { CARS: CARS,

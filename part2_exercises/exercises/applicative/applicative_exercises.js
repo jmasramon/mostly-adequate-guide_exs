@@ -12,7 +12,7 @@ var localStorage = {};
 // Write a function that add's two possibly null numbers together using Maybe and ap()
 
 var ex1 = function(x, y) {
-  // write me
+  return Maybe.of(_.add).ap(Maybe.of(x)).ap(Maybe.of(y))
 };
 
 
@@ -20,7 +20,7 @@ var ex1 = function(x, y) {
 // ==========
 // Rewrite 1 to use liftA2 instead of ap()
 
-var ex2 = undefined;
+var ex2 = liftA2(_.add)
 
 
 
@@ -31,7 +31,9 @@ var makeComments = _.reduce(function(acc, c){ return acc+"<li>"+c+"</li>" }, "")
 var render = _.curry(function (p, cs) { return "<div>"+p.title+"</div>"+makeComments(cs); });
 
 
-var ex3 = undefined;
+var ex3 = Task.of(render).ap((getPost(2))).ap((getComments(2)))
+var ex3 = liftA2(render)((getPost(2)))((getComments(2)))
+var ex3 = liftA2(render, getPost(2), getComments(2))
 
 
 
@@ -47,7 +49,8 @@ var getCache = function(x) {
 }
 var game = _.curry(function (p1, p2) { return p1 + ' vs ' + p2; });
 
-var ex4 = undefined;
+var ex4 = liftA2(game, getCache('player1'), getCache('player2'))
+var ex4 = IO.of(game).ap(getCache('player1')).ap(getCache('player2'))
 
 
 

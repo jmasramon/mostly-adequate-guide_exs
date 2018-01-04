@@ -1,0 +1,5 @@
+title;author;ISIN;ed;year;place
+'Dune';'F.Herbert';934875,;'Vicenç Vives';;
+'Germinal';'Flaubert';934876;;'1745';
+'b1';'F.gase';934873,;;;'Barcelona'
+'b2';'asdge';934872;;'1979';
