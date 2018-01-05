@@ -16,7 +16,9 @@ const appendToKVPairs = (kvPairs, kvPair) =>
 // [[[k, v]] -> [[k, v]] -> [[k, v]]
 // ex: ex: [[['author', '\'F.Herbert\'']]] -> [['author', '\'F.Herbert\''], ['title',  '\'Dune\'']] -> [['author', '\'F.Herbert\''], ['title',  '\'Dune\'']]
 const updateLastBook = (books, newLastBook) => 
-  _.tail(books).length ? _.append(newLastBook, _.init(books)) : [newLastBook]
+  _.tail(books).length ? 
+    _.append(newLastBook, _.init(books)) : 
+    [newLastBook]
 
 // [[k, v]] -> {} 
 //  ex: [['author', '\'F.Herbert\''], ['title',  '\'Dune\'']] -> 

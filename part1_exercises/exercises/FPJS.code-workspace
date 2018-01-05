@@ -1,21 +1,6 @@
 {
 	"folders": [
 		{
-			"path": "curry"
-		},
-		{
-			"path": "compose"
-		},
-		{
-			"path": "/Users/jordi/dev/other/FPJS-Class/part2_exercises/exercises/functors"
-		},
-		{
-			"path": "/Users/jordi/dev/other/FPJS-Class/part2_exercises/exercises/monads"
-		},
-		{
-			"path": "/Users/jordi/dev/other/FPJS-Class/part2_exercises/exercises/applicative"
-		},
-		{
 			"path": "/Users/jordi/dev/other/FPJS-Class"
 		}
 	],
