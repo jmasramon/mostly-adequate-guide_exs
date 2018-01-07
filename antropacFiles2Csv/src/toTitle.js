@@ -4,18 +4,18 @@ const _ = require('ramda')
 const csv = require('./toCsv')
 
 // [k] -> {b} -> [k]
-const addNewKeys = (acc, book) => acc.length === 0 ? 
-_.keys(book) : 
-_.uniq(_.concat(acc, _.keys(book)))
+const addNewKeysReducer = (acc, book) => acc.length === 0 ? 
+  _.keys(book) : 
+  _.uniq(_.concat(acc, _.keys(book)))
 
 // [o] -> [s]
-const getAllKeys = _.reduce(addNewKeys, [])
+const getAllKeys = _.reduce(addNewKeysReducer, [])
 
 const createKeysTitle = csv.arr2csv
 const createBooksTitle = _.compose(csv.arr2csv, getAllKeys)
 
 module.exports = {
-  addNewKeys: addNewKeys,
+  addNewKeys: addNewKeysReducer,
   getAllKeys: getAllKeys,
   createKeysTitle: createKeysTitle,
   createBooksTitle: createBooksTitle

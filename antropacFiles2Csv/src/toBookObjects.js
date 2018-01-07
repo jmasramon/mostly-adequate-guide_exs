@@ -29,13 +29,15 @@ const getAbsentKeys = _.flip(_.without)
 
 const toBookObjects = _.map(toBookObject)
 
-const toKeysAndBooks = _.reduce((acc, bookKVPairs) => {
+const toKeysAndBooksReducer = (acc, bookKVPairs) => {
   const newBook = toBookObject(bookKVPairs)
   const newKeys = updateKeys(acc.keys, _.keys(newBook))
   const newBooks = _.concat(tc.addDefaults(newKeys)(acc.books), 
                             tc.addDefaults(newKeys)([newBook]))
   return {keys: newKeys, books: newBooks}
-}, {keys: [], books: []})
+}
+
+const toKeysAndBooks = _.reduce(toKeysAndBooksReducer, {keys: [], books: []})
 
 module.exports = {
   toBookObject: toBookObject,

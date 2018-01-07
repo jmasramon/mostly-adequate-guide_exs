@@ -20,21 +20,24 @@ const updateLastBook = (books, newLastBook) =>
     _.append(newLastBook, _.init(books)) : 
     [newLastBook]
 
+const kvBooker = predicate => reducingF => (acc, kvPair) => {
+  let curBook = _.last(acc)
+  let newBook = appendToKVPairs(curBook, kvPair)
+  let newBooks = updateLastBook(acc, newBook)
+
+  return predicate(kvPair) ? 
+    reducingF([], newBooks) : 
+    newBooks
+}
+
+const toKVBooksReducer = kvBooker(emptyKVPair)(_.append)
+
 // [[k, v]] -> {} 
 //  ex: [['author', '\'F.Herbert\''], ['title',  '\'Dune\'']] -> 
 //    [[[author, 'F.Herbert'], [title, 'Dune']]]
-const toKVBooks = _.compose(_.init, _.reduce(
-  (acc, kvPair) => {
-    let curBook = _.last(acc)
-    let newBook = appendToKVPairs(curBook, kvPair)
-    let newBooks = updateLastBook(acc, newBook)
-
-    return emptyKVPair(kvPair) ? 
-      _.append([], newBooks) : 
-      newBooks
-  },
+const toKVBooks = _.compose(/*_.init, */_.reduce(
+  toKVBooksReducer,
   [[]]))
-
 
 module.exports = {
   emptyKVPair: emptyKVPair,
